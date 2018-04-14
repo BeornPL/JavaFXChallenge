@@ -38,19 +38,33 @@ public class DialogController {
         return newContact;
     }
 
-    public void setFirstNameField(String firstNameField) {
-        this.firstNameField.setText(firstNameField);
+    public void editContact(Contact contact) {
+        firstNameField.setText(contact.getFirstName());
+        lastNameField.setText(contact.getLastName());
+        phoneNumberField.setText(contact.getPhoneNumber());
+        notesField.setText(contact.getNotes());
     }
 
-    public void setLastNameField(String lastNameField) {
-        this.lastNameField.setText(lastNameField);
+    public void updateContact(Contact contact) {
+        contact.setFirstName(firstNameField.getText());
+        contact.setLastName(lastNameField.getText());
+        contact.setPhoneNumber(phoneNumberField.getText());
+        contact.setNotes(notesField.getText());
     }
 
-    public void setPhoneNumberField(String phoneNumberField) {
-        this.phoneNumberField.setText(phoneNumberField);
-    }
-
-    public void setNotesField(String notesField) {
-        this.notesField.setText(notesField);
-    }
+//    public void setFirstNameField(String firstNameField) {
+//        this.firstNameField.setText(firstNameField);
+//    }
+//
+//    public void setLastNameField(String lastNameField) {
+//        this.lastNameField.setText(lastNameField);
+//    }
+//
+//    public void setPhoneNumberField(String phoneNumberField) {
+//        this.phoneNumberField.setText(phoneNumberField);
+//    }
+//
+//    public void setNotesField(String notesField) {
+//        this.notesField.setText(notesField);
+//    }
 }

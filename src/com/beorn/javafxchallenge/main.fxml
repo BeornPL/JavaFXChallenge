@@ -28,23 +28,26 @@
     </top>
     <center>
         <TableView fx:id="contactsTableView">
+            <columnResizePolicy>
+                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+            </columnResizePolicy>
             <columns>
-                <TableColumn text="First Name">
+                <TableColumn text="First Name" prefWidth="100">
                     <cellValueFactory>
                         <PropertyValueFactory property="firstName"/>
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn text="Last Name">
+                <TableColumn text="Last Name" prefWidth="100">
                     <cellValueFactory>
                         <PropertyValueFactory property="lastName"/>
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn text="Phone Number">
+                <TableColumn text="Phone Number" prefWidth="100">
                     <cellValueFactory>
                         <PropertyValueFactory property="phoneNumber"/>
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn text="Notes">
+                <TableColumn text="Notes" prefWidth="300">
                     <cellValueFactory>
                         <PropertyValueFactory property="notes"/>
                     </cellValueFactory>

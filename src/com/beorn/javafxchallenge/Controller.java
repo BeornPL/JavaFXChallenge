@@ -6,10 +6,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
+import javafx.event.EventHandler;
 import javafx.scene.layout.BorderPane;
 import javafx.util.Callback;
 
+import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.util.EventListener;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,6 +27,15 @@ public class Controller {
     private TableView<Contact> contactsTableView;
 
     public void initialize() {
+        mainBorderPane.setOnKeyPressed(new javafx.event.EventHandler<javafx.scene.input.KeyEvent>() {
+            @Override
+            public void handle(javafx.scene.input.KeyEvent event) {
+                if (event.getCode() == KeyCode.ESCAPE) {
+                    contactsTableView.getSelectionModel().clearSelection();
+                }
+            }
+        });
+
         data = new ContactData();
         data.loadContacts();
 
@@ -72,6 +85,16 @@ public class Controller {
 
     @FXML
     public void showEditDialogue() {
+        Contact selectedItem = contactsTableView.getSelectionModel().getSelectedItem();
+        if(selectedItem == null) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("No Contact Selected");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select the contact you want to edit.");
+            alert.showAndWait();
+            return;
+        }
+
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.initOwner(mainBorderPane.getScene().getWindow());
         dialog.setTitle("Edit Contact");
@@ -89,30 +112,49 @@ public class Controller {
         dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CANCEL);
 
-        int index = contactsTableView.getSelectionModel().getSelectedIndex();
+//        int index = contactsTableView.getSelectionModel().getSelectedIndex();
 
         DialogController controller = fxmlLoader.getController();
+        controller.editContact(selectedItem);
 
-        controller.setFirstNameField(contactsTableView.getItems().get(index).getFirstName());
-        controller.setLastNameField(contactsTableView.getItems().get(index).getLastName());
-        controller.setPhoneNumberField(contactsTableView.getItems().get(index).getPhoneNumber());
-        controller.setNotesField(contactsTableView.getItems().get(index).getNotes());
+//        controller.setFirstNameField(contactsTableView.getItems().get(index).getFirstName());
+//        controller.setLastNameField(contactsTableView.getItems().get(index).getLastName());
+//        controller.setPhoneNumberField(contactsTableView.getItems().get(index).getPhoneNumber());
+//        controller.setNotesField(contactsTableView.getItems().get(index).getNotes());
 
         Optional<ButtonType> result = dialog.showAndWait();
         if(result.isPresent() && result.get()==ButtonType.OK) {
 
-            Contact newItem = controller.processResults();
-            data.editContact(index, newItem);
+//            Contact newItem = controller.processResults();
+//            data.editContact(index, newItem);
+            controller.updateContact(selectedItem);
             data.saveContacts();
-            contactsTableView.getSelectionModel().select(newItem);
+            contactsTableView.getSelectionModel().select(selectedItem);
         }
     }
 
     @FXML
     public void handleDelete() {
         Contact contact = contactsTableView.getSelectionModel().getSelectedItem();
-        data.deleteContact(contact);
-        data.saveContacts();
+        if(contact == null) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("No Contact Selected");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select the contact you want to delete.");
+            alert.showAndWait();
+            return;
+        }
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete Contact");
+        alert.setHeaderText(null);
+        alert.setContentText("Are you sure to delete?");
+        Optional<ButtonType> results = alert.showAndWait();
+
+        if(results.isPresent() && (results.get() == ButtonType.OK)) {
+            data.deleteContact(contact);
+            data.saveContacts();
+        }
     }
 
     @FXML
