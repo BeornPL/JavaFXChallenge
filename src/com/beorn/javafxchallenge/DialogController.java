@@ -24,18 +24,33 @@ public class DialogController {
 
     @FXML
     public Contact processResults() {
-        Contact newContact = new Contact();
-
         String firstName = firstNameField.getText().trim();
-        newContact.setFirstName(firstName);
+//        newContact.setFirstName(firstName);
         String lastName = lastNameField.getText().trim();
-        newContact.setFirstName(lastName);
+//        newContact.setFirstName(lastName);
         String phoneNumber = phoneNumberField.getText().trim();
-        newContact.setFirstName(phoneNumber);
+//        newContact.setFirstName(phoneNumber);
         String notes = notesField.getText().trim();
-        newContact.setFirstName(notes);
+//        newContact.setFirstName(notes);
 
+        Contact newContact = new Contact(firstName, lastName, phoneNumber, notes);
         ContactData.getInstance().addContact(newContact);
         return newContact;
+    }
+
+    public void setFirstNameField(String firstNameField) {
+        this.firstNameField.setText(firstNameField);
+    }
+
+    public void setLastNameField(String lastNameField) {
+        this.lastNameField.setText(lastNameField);
+    }
+
+    public void setPhoneNumberField(String phoneNumberField) {
+        this.phoneNumberField.setText(phoneNumberField);
+    }
+
+    public void setNotesField(String notesField) {
+        this.notesField.setText(notesField);
     }
 }

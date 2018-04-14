@@ -52,6 +52,10 @@ public class ContactData {
         contacts.add(contact);
     }
 
+    public void editContact(int i, Contact contact) {
+        contacts.set(i, contact);
+    }
+
     public void deleteContact(Contact contact) {
         contacts.remove(contact);
     }

@@ -1,2 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <contacts>
+<contact>
+	<first_name>Agata</first_name>
+	<last_name>Myśliwiec</last_name>
+	<phone_number>71298</phone_number>
+	<notes>Niezla laska</notes>
+</contact>
+<contact>
+	<first_name>Bartek</first_name>
+	<last_name>Dudkiewicz</last_name>
+	<phone_number>126759</phone_number>
+	<notes>Programista-Debilista-Bardzo</notes>
+</contact>
+<contact>
+	<first_name>Cecylia</first_name>
+	<last_name>Miś</last_name>
+	<phone_number>7549</phone_number>
+	<notes>To moja żona :)</notes>
+</contact>
+<contact>
+	<first_name>Darek</first_name>
+	<last_name>Barek</last_name>
+	<phone_number>12567</phone_number>
+	<notes>Chuj</notes>
+</contact>
+<contact>
+	<first_name>Elżbieta</first_name>
+	<last_name>Ignora</last_name>
+	<phone_number>5468</phone_number>
+	<notes>Fajna</notes>
+</contact>
+</contacts>

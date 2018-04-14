@@ -7,10 +7,10 @@ import javafx.beans.property.StringProperty;
  * Created by Beorn on 2018-04-12.
  */
 public class Contact {
-    private StringProperty firstName;
-    private StringProperty lastName;
-    private StringProperty phoneNumber;
-    private StringProperty notes;
+    private SimpleStringProperty firstName = new SimpleStringProperty("");
+    private SimpleStringProperty lastName = new SimpleStringProperty("");
+    private SimpleStringProperty phoneNumber = new SimpleStringProperty("");
+    private SimpleStringProperty notes = new SimpleStringProperty("");
 
     public Contact() {
 
@@ -23,64 +23,52 @@ public class Contact {
         this.notes.set(notes);
     }
 
-    public void setFirstName(String firstName) {
-        firstNameProperty().set(firstName);
-    }
-
-    public void setLastName(String lastName) {
-        lastNameProperty().set(lastName);
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        phoneNumberProperty().set(phoneNumber);
-    }
-
-    public void setNotes(String notes) {
-        notesProperty().set(notes);
-    }
-
     public String getFirstName() {
-        return firstNameProperty().get();
+        return firstName.get();
     }
 
-    public String getLastName() {
-        return lastNameProperty().get();
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumberProperty().get();
-    }
-
-    public String getNotes() {
-        return notesProperty().get();
-    }
-
-    public StringProperty firstNameProperty() {
-        if(firstName == null) {
-            firstName = new SimpleStringProperty(this, "firstName");
-        }
+    public SimpleStringProperty firstNameProperty() {
         return firstName;
     }
 
-    public StringProperty lastNameProperty() {
-        if(lastName == null) {
-            lastName = new SimpleStringProperty(this, "lastName");
-        }
+    public void setFirstName(String firstName) {
+        this.firstName.set(firstName);
+    }
+
+    public String getLastName() {
+        return lastName.get();
+    }
+
+    public SimpleStringProperty lastNameProperty() {
         return lastName;
     }
 
-    public StringProperty phoneNumberProperty() {
-        if(phoneNumber == null) {
-            phoneNumber = new SimpleStringProperty(this, "phoneNumber");
-        }
+    public void setLastName(String lastName) {
+        this.lastName.set(lastName);
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber.get();
+    }
+
+    public SimpleStringProperty phoneNumberProperty() {
         return phoneNumber;
     }
 
-    public StringProperty notesProperty() {
-        if(notes == null) {
-            notes = new SimpleStringProperty(this, "notes");
-        }
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber.set(phoneNumber);
+    }
+
+    public String getNotes() {
+        return notes.get();
+    }
+
+    public SimpleStringProperty notesProperty() {
         return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes.set(notes);
     }
 
     @Override
