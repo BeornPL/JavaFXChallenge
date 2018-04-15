@@ -1,20 +1,17 @@
 package com.beorn.javafxchallenge;
 
 import javafx.application.Platform;
-import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
-import javafx.event.EventHandler;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.util.Callback;
 
-import java.awt.event.KeyEvent;
 import java.io.IOException;
-import java.util.EventListener;
-import java.util.List;
 import java.util.Optional;
 
 public class Controller {
@@ -27,15 +24,6 @@ public class Controller {
     private TableView<Contact> contactsTableView;
 
     public void initialize() {
-        mainBorderPane.setOnKeyPressed(new javafx.event.EventHandler<javafx.scene.input.KeyEvent>() {
-            @Override
-            public void handle(javafx.scene.input.KeyEvent event) {
-                if (event.getCode() == KeyCode.ESCAPE) {
-                    contactsTableView.getSelectionModel().clearSelection();
-                }
-            }
-        });
-
         data = new ContactData();
         data.loadContacts();
 
@@ -52,6 +40,41 @@ public class Controller {
 //            }
 //            return cell;
 //        });
+        contactsTableView.setRowFactory(new Callback<TableView<Contact>, TableRow<Contact>>() {
+            @Override
+            public TableRow<Contact> call(TableView<Contact> param) {
+                final TableRow<Contact> row = new TableRow<>();
+                row.addEventFilter(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent event) {
+                        final int index = row.getIndex();
+                        if (index >= 0 && index < contactsTableView.getItems().size() && contactsTableView.getSelectionModel().isSelected(index)) {
+                            contactsTableView.getSelectionModel().clearSelection();
+                            event.consume();
+                        }
+                    }
+                });
+                contactsTableView.addEventFilter(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+                    @Override
+                    public void handle(KeyEvent event) {
+                        final int index = row.getIndex();
+                        if(event.getCode().equals(KeyCode.ESCAPE)) {
+                            if (index >= 0 && index < contactsTableView.getItems().size() && contactsTableView.getSelectionModel().isSelected(index)) {
+                                contactsTableView.getSelectionModel().clearSelection();
+                                event.consume();
+                            }
+                        }
+                    }
+                });
+                return row;
+            }
+        });
+
+    }
+
+    @FXML
+    public void deselecting() {
+        System.out.println("test");
     }
 
     @FXML
@@ -156,6 +179,17 @@ public class Controller {
             data.saveContacts();
         }
     }
+
+//    @FXML
+//    private void handleDeselect(KeyEvent keyEvent) {
+//        Contact selectedContact = contactsTableView.getSelectionModel().getSelectedItem();
+//        if(selectedContact == null) {
+//            return;
+//        }
+//        if(keyEvent.getCode().equals(KeyCode.ESCAPE)) {
+//            contactsTableView.getSelectionModel().clearSelection();
+//        }
+//    }
 
     @FXML
     private void handleExit(){
